@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Atelier Áureo | Instituto Internacional</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wine: {
+                            DEFAULT: '#4A0E17',
+                            dark: '#2b080d',
+                            light: '#6d1825'
+                        },
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            dark: '#aa8c2c',
+                            light: '#e5c96e'
+                        },
+                        beige: {
+                            DEFAULT: '#F5F5DC',
+                            dark: '#E8DECE',
+                            light: '#FCFCF5'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for elegance */
+        body {
+            background-color: #2b080d;
+            color: #F5F5DC;
+            overflow-x: hidden;
+        }
+        
+        .bg-texture {
+            position: relative;
+        }
+        
+        .bg-texture::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 opacity=%220.03%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-z {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Gold gradient text */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Custom inputs */
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-bottom-color: #e5c96e;
+            box-shadow: 0 1px 0 0 #e5c96e;
+        }
+
+        /* Subtle glow for cards */
+        .card-hover:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* Certificate Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100vw;
+                height: 100vh;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #F5F5DC !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            /* Ocultar botones y paneles al imprimir */
+            #cert-control-panel, #close-cert-btn, .print-hidden {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="font-playfair antialiased selection:bg-gold selection:text-wine-dark">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-wine-dark/95 backdrop-blur-sm border-b border-gold/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex flex-col justify-center">
+                    <a href="#" class="font-cinzel text-2xl tracking-widest text-gold">L'Atelier Áureo</a>
+                    <span class="text-beige/60 text-[0.65rem] tracking-[0.2em] uppercase font-light">Instituto Internacional</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#sobre-nosotros" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Sobre Nosotros</a>
+                    <a href="#programas" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Programas de Élite</a>
+                    <a href="#contacto" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Contáctenos</a>
+                    
+                    <!-- MENÚ SECRETO -->
+                    <a href="#" onclick="openCertificateArea(); return false;" class="font-cinzel text-sm tracking-wider text-gold opacity-0 hover:opacity-100 transition-opacity duration-700 cursor-default hover:cursor-pointer select-none">Certificados</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gold hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-wine border-b border-gold/20">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                <a href="#sobre-nosotros" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Sobre Nosotros</a>
+                <a href="#programas" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Programas de Élite</a>
+                <a href="#contacto" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Contáctenos</a>
+                <!-- Menú Secreto Móvil (casi invisible) -->
+                <a href="#" onclick="openCertificateArea(); return false;" class="block px-3 py-2 font-cinzel text-gold opacity-0 active:opacity-100 transition-opacity">Certificados</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-texture bg-wine-dark overflow-hidden">
+        <!-- Subtle background glowing orb -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-wine rounded-full blur-[120px] opacity-50 z-0"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+            <h2 class="text-gold font-cinzel tracking-[0.3em] text-sm md:text-base uppercase mb-6">La Creación no es un Accidente</h2>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-cinzel mb-8 text-gold-gradient leading-tight">L'Atelier Áureo</h1>
+            <p class="text-beige/80 text-lg md:text-xl font-light italic max-w-2xl mx-auto leading-relaxed mb-12">
+                Instituto Internacional de Artes Literarias y Cinematográficas. Diseñado exclusivamente para mentes creativas que buscan perfeccionar su oficio.
+            </p>
+            <a href="#sobre-nosotros" class="inline-block border border-gold text-gold font-cinzel tracking-widest uppercase text-xs px-10 py-4 hover:bg-gold hover:text-wine-dark transition-all duration-500">
+                Adentrarse al Instituto
+            </a>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+            <div class="w-px h-16 bg-gradient-to-b from-gold to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Section: Sobre Nosotros -->
+    <section id="sobre-nosotros" class="py-24 bg-beige text-wine-dark bg-texture">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 content-z">
+            
+            <!-- Manifiesto -->
+            <div class="text-center mb-24 max-w-4xl mx-auto">
+                <span class="font-cinzel text-gold-dark tracking-widest uppercase text-sm mb-4 block">Filosofía Fundacional</span>
+                <h2 class="text-4xl md:text-5xl font-cinzel mb-10 text-wine-dark">El Manifiesto del Instituto</h2>
+                <div class="w-16 h-px bg-gold mx-auto mb-10"></div>
+                <p class="text-lg leading-loose text-wine-dark/80 text-justify md:text-center">
+                    Fundado bajo la premisa de que la creación artística no es un accidente, sino una <span class="font-semibold text-wine">arquitectura precisa</span>. Posicionados en el ecosistema cultural desde 2015, L'Atelier Áureo trasciende las fronteras geográficas para ofrecer formación virtual de élite. Nuestro instituto internacional está diseñado exclusivamente para mentes creativas que buscan perfeccionar su oficio, desde la construcción de mundos literarios hasta la dirección cinematográfica con impacto global.
+                </p>
+            </div>
+
+            <!-- Claustro -->
+            <div class="mt-20">
+                <div class="text-center mb-16">
+                    <span class="font-cinzel text-gold-dark tracking-widest uppercase text-sm mb-4 block">Maestros de la Industria</span>
+                    <h3 class="text-3xl md:text-4xl font-cinzel text-wine-dark">El Claustro Académico</h3>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20">
+                    <!-- Mentor 1 -->
+                    <div class="group relative border border-gold/30 p-8 md:p-12 bg-beige-light hover:border-gold transition-colors duration-500">
+                        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-beige-light px-4">
+                            <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-cinzel text-wine mb-2 text-center">Fernando Alexander Cárdenas Vinueza</h4>
+                        <p class="text-sm font-cinzel text-gold-dark text-center mb-6 tracking-wide">Magíster en Letras, Narrativa Estructural y Crítica Literaria</p>
+                        <p class="text-wine-dark/80 leading-relaxed text-justify">
+                            <strong class="text-wine block mb-2 font-cinzel text-center">Un arquitecto de la palabra.</strong>
+                            Especialista de talla internacional en la deconstrucción y creación de estructuras narrativas complejas. Con una profunda maestría en las corrientes literarias clásicas y contemporáneas, su metodología no solo enseña a escribir, sino a encontrar esa "voz de autor" inconfundible. Dedica su carrera a mentorizar a escritores, transformando premisas abstractas en obras de peso literario, listas para competir en el mercado editorial global.
+                        </p>
+                    </div>
+
+                    <!-- Mentor 2 -->
+                    <div class="group relative border border-gold/30 p-8 md:p-12 bg-beige-light hover:border-gold transition-colors duration-500">
+                        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-beige-light px-4">
+                            <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-cinzel text-wine mb-2 text-center">Maria Elizabeth Fierro Borja</h4>
+                        <p class="text-sm font-cinzel text-gold-dark text-center mb-6 tracking-wide">Cineasta, Magíster en Cine Iberoamericano y Dirección</p>
+                        <p class="text-wine-dark/80 leading-relaxed text-justify">
+                            <strong class="text-wine block mb-2 font-cinzel text-center">La nueva mirada del cine contemporáneo.</strong>
+                            Combina una rigurosa formación académica internacional con una sensibilidad visual cruda y poética. Especializada en la traducción de la psicología de los personajes a la narrativa audiovisual, domina el lenguaje de la cámara y la dirección escénica. Su enfoque dota a los nuevos realizadores de las herramientas técnicas y teóricas para crear cine de autor con proyección hacia grandes festivales internacionales.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Cursos (Programas de Élite) -->
+    <section id="programas" class="py-24 bg-wine-dark bg-texture relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 content-z">
+            <div class="text-center mb-20">
+                <span class="font-cinzel text-gold tracking-widest uppercase text-sm mb-4 block">Oferta Académica</span>
+                <h2 class="text-4xl md:text-5xl font-cinzel mb-8 text-gold-gradient">Laboratorios de Alta Especialización</h2>
+                <div class="w-24 h-px bg-gold/50 mx-auto"></div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                
+                <!-- Curso 1 -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">Ingeniería del Guion</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">De la Premisa a la Pantalla</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Estructura de 3 actos, arcos de transformación, formato profesional internacional y diálogos con subtexto.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Maria E. Fierro</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">40 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$350 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 2 -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">El Arte de la Novela</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">Arquitectura y Voz Narrativa</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Diseño de escaletas literarias, construcción de mundos (worldbuilding), ritmo de la prosa y desarrollo de personajes tridimensionales.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Fernando A. Cárdenas</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">45 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$150 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 3 -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">Estética de lo Macabro</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">Narrativa Gótica y Neo-Retro</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Un viaje transversal entre literatura y cine. Creación de atmósferas oscuras, tensión psicológica y dirección de arte melancólica.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentores</p>
+                            <p class="text-sm text-beige">Fernando A. Cárdenas & Maria E. Fierro</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">30 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$250 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 4 -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">Dirección de Actores</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">Y Puesta en Escena</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Técnicas de bloqueo de cámara (blocking), análisis de guion para rodaje y métodos de extracción emocional con el talento actoral.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Maria E. Fierro</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">35 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$300 USD</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 5 (Nuevo) -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">Cosmovisión Interandina</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">El Eco de los Andes en la Narrativa</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Exploración profunda del folclore, mitos andinos y la identidad latinoamericana aplicados a la construcción de mundos contemporáneos.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Fernando A. Cárdenas</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">35 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$280 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 6 (Nuevo) -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">Gramática del Montaje</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">El Ritmo Invisible del Cine</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">El arte de contar la historia por tercera vez. Análisis del montaje analítico, sintético y el ritmo interno del plano en la postproducción.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Maria E. Fierro</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">30 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$320 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curso 7 (Nuevo) -->
+                <div class="bg-wine border border-gold/20 p-8 card-hover transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150"></div>
+                    <h3 class="text-2xl font-cinzel text-gold mb-2">El Documental de Autor</h3>
+                    <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-6">La Realidad como Lienzo</p>
+                    <p class="text-beige/80 mb-6 font-light leading-relaxed h-20">Técnicas de investigación, aproximación al sujeto y construcción narrativa en el cine de no ficción. La mirada subjetiva sobre la verdad objetiva.</p>
+                    <div class="flex justify-between items-end border-t border-gold/20 pt-4 mt-auto">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Mentor</p>
+                            <p class="text-sm text-beige">Maria E. Fierro</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">40 Horas</p>
+                            <p class="font-cinzel text-xl text-gold-light">$300 USD</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 8 (Full Width) -->
+                <div class="bg-gradient-to-r from-wine to-wine-dark border border-gold/40 p-8 card-hover transition-all duration-300 relative overflow-hidden group md:col-span-2">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-cinzel text-gold mb-2">Laboratorio de Autor</h3>
+                            <p class="text-beige/60 text-sm font-cinzel tracking-wider mb-4">Clínica de Proyectos Privada</p>
+                            <p class="text-beige/90 font-light leading-relaxed">Asesoría exclusiva y personalizada para el pulido final de obras literarias o guiones cinematográficos. Un espacio confidencial para perfeccionar la obra antes de su exposición al mercado.</p>
+                        </div>
+                        <div class="w-full md:w-auto flex flex-col items-center md:items-end border-t md:border-t-0 md:border-l border-gold/30 pt-6 md:pt-0 md:pl-8">
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">Claustro Completo</p>
+                            <p class="text-sm text-beige mb-4">Ambos Mentores</p>
+                            <p class="text-xs text-gold uppercase tracking-widest mb-1">15 Horas</p>
+                            <p class="font-cinzel text-2xl text-gold-light">$400 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Contacto -->
+    <section id="contacto" class="py-24 bg-beige text-wine-dark bg-texture">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 content-z">
+            <div class="text-center mb-16">
+                <span class="font-cinzel text-gold-dark tracking-widest uppercase text-sm mb-4 block">Aplicación y Consultas</span>
+                <h2 class="text-4xl md:text-5xl font-cinzel text-wine-dark">Inicie su Proceso</h2>
+            </div>
+
+            <!-- Form Container -->
+            <div class="bg-white/50 backdrop-blur-sm border border-gold/30 p-8 md:p-12 shadow-[0_10px_40px_rgba(74,14,23,0.05)] relative">
+                
+                <!-- Decoración esquinas -->
+                <div class="absolute top-0 left-0 w-4 h-4 border-t border-l border-gold"></div>
+                <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-gold"></div>
+                <div class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-gold"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-gold"></div>
+
+                <!-- Form -->
+                <form id="contact-form" class="space-y-8" onsubmit="submitForm(event)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Nombre -->
+                        <div class="relative">
+                            <input type="text" id="name" required class="w-full bg-transparent border-b border-wine/30 py-2 text-wine-dark font-light placeholder-transparent peer" placeholder="Nombre Completo">
+                            <label for="name" class="absolute left-0 -top-3.5 text-wine/60 text-sm font-cinzel transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-wine/50 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-wine peer-focus:text-sm">Nombre Completo</label>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="relative">
+                            <input type="email" id="email" required class="w-full bg-transparent border-b border-wine/30 py-2 text-wine-dark font-light placeholder-transparent peer" placeholder="Correo Electrónico">
+                            <label for="email" class="absolute left-0 -top-3.5 text-wine/60 text-sm font-cinzel transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-wine/50 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-wine peer-focus:text-sm">Correo Electrónico</label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Institución -->
+                        <div class="relative">
+                            <input type="text" id="institution" class="w-full bg-transparent border-b border-wine/30 py-2 text-wine-dark font-light placeholder-transparent peer" placeholder="Institución / Organización">
+                            <label for="institution" class="absolute left-0 -top-3.5 text-wine/60 text-sm font-cinzel transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-wine/50 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-wine peer-focus:text-sm">Institución (Opcional)</label>
+                        </div>
+                        
+                        <!-- Producto a considerar -->
+                        <div class="relative">
+                            <select id="product" required class="w-full bg-transparent border-b border-wine/30 py-2 text-wine-dark font-light focus:outline-none focus:border-wine appearance-none font-cinzel text-sm">
+                                <option value="" disabled selected>Seleccione el Laboratorio de interés...</option>
+                                <option value="guion">Ingeniería del Guion</option>
+                                <option value="novela">El Arte de la Novela</option>
+                                <option value="macabro">Estética de lo Macabro</option>
+                                <option value="direccion">Dirección de Actores</option>
+                                <option value="interandina">Cosmovisión Interandina</option>
+                                <option value="montaje">Gramática del Montaje</option>
+                                <option value="documental">El Documental de Autor</option>
+                                <option value="clinica">Clínica de Proyectos Privada</option>
+                                <option value="otro">Consulta General</option>
+                            </select>
+                            <!-- Flecha custom -->
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-wine">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motivo / Mensaje -->
+                    <div class="relative pt-4">
+                        <textarea id="message" rows="4" required class="w-full bg-transparent border-b border-wine/30 py-2 text-wine-dark font-light placeholder-transparent peer resize-none" placeholder="Motivo de consulta..."></textarea>
+                        <label for="message" class="absolute left-0 top-0 text-wine/60 text-sm font-cinzel transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-wine/50 peer-placeholder-shown:top-6 peer-focus:top-0 peer-focus:text-wine peer-focus:text-sm">Motivo de consulta / Propuesta de Proyecto</label>
+                    </div>
+
+                    <div class="text-center pt-6">
+                        <button type="submit" class="bg-wine text-beige font-cinzel tracking-widest uppercase text-sm px-12 py-4 hover:bg-wine-dark hover:text-gold transition-colors duration-300 border border-transparent hover:border-gold">
+                            Enviar Solicitud
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Mensaje de Éxito (Oculto por defecto) -->
+                <div id="success-message" class="hidden text-center py-12">
+                    <svg class="w-16 h-16 text-gold mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3 class="text-2xl font-cinzel text-wine-dark mb-4">Su solicitud ha sido recibida</h3>
+                    <p class="text-wine-dark/80 font-light max-w-md mx-auto">
+                        El claustro revisará su postulación y nos pondremos en contacto con usted a la brevedad posible para continuar con el proceso de admisión.
+                    </p>
+                    <button onclick="resetForm()" class="mt-8 text-sm font-cinzel text-wine border-b border-wine pb-1 hover:text-gold hover:border-gold transition-colors">
+                        Enviar otra consulta
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-wine-dark border-t border-gold/20 py-12 text-center relative overflow-hidden bg-texture">
+        <div class="relative z-10">
+            <h2 class="font-cinzel text-2xl text-gold mb-6">L'Atelier Áureo</h2>
+            <div class="flex justify-center space-x-6 mb-8">
+                <!-- Redes sociales dummy icons -->
+                <a href="#" class="text-beige/50 hover:text-gold transition-colors">
+                    <span class="sr-only">Instagram</span>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#" class="text-beige/50 hover:text-gold transition-colors">
+                    <span class="sr-only">Twitter</span>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                </a>
+            </div>
+            <p class="text-beige/40 text-xs font-light tracking-widest uppercase">
+                &copy; 2026 L'Atelier Áureo. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ÁREA SECRETA DE CERTIFICADOS -->
+    <section id="certificate-area" class="fixed inset-0 z-[100] hidden bg-wine-dark bg-texture overflow-y-auto">
+        <div class="min-h-screen flex flex-col lg:flex-row relative z-10">
+            
+            <!-- Botón Cerrar -->
+            <button id="close-cert-btn" onclick="closeCertificateArea()" class="absolute top-6 right-6 text-gold hover:text-beige transition-colors z-50">
+                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Panel de Control (Izquierda) -->
+            <div id="cert-control-panel" class="w-full lg:w-1/3 bg-wine border-r border-gold/20 p-8 pt-24 lg:h-screen lg:overflow-y-auto lg:sticky lg:top-0">
+                <h2 class="text-3xl font-cinzel text-gold mb-2">Despacho de Certificaciones</h2>
+                <p class="text-beige/60 text-sm font-light mb-8">Complete los datos para generar el documento oficial.</p>
+
+                <form id="cert-form" class="space-y-6">
+                    <!-- Nombre del Estudiante -->
+                    <div>
+                        <label class="block text-gold/80 text-xs font-cinzel uppercase tracking-widest mb-2">Acreditado a:</label>
+                        <input type="text" id="cert-name" oninput="updateCertificate()" class="w-full bg-transparent border-b border-gold/30 py-2 text-beige font-light focus:border-gold outline-none transition-colors" placeholder="Nombre completo del estudiante">
+                    </div>
+
+                    <!-- Selección de Cursos -->
+                    <div>
+                        <label class="block text-gold/80 text-xs font-cinzel uppercase tracking-widest mb-4">Programas Completados:</label>
+                        <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Ingeniería del Guion" data-hours="40">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Ingeniería del Guion <span class="text-xs text-gold/50">(40h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Arte de la Novela" data-hours="45">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">El Arte de la Novela <span class="text-xs text-gold/50">(45h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Estética de lo Macabro" data-hours="30">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Estética de lo Macabro <span class="text-xs text-gold/50">(30h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Dirección de Actores" data-hours="35">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Dirección de Actores <span class="text-xs text-gold/50">(35h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Cosmovisión Interandina" data-hours="35">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Cosmovisión Interandina <span class="text-xs text-gold/50">(35h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Gramática del Montaje" data-hours="30">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Gramática del Montaje <span class="text-xs text-gold/50">(30h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Documental de Autor" data-hours="40">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">El Documental de Autor <span class="text-xs text-gold/50">(40h)</span></span>
+                            </label>
+                            <label class="flex items-start space-x-3 cursor-pointer group">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Laboratorio de Autor" data-hours="15">
+                                <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Laboratorio de Autor <span class="text-xs text-gold/50">(15h)</span></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Fechas -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gold/80 text-xs font-cinzel uppercase tracking-widest mb-2">Fecha Inicio:</label>
+                            <input type="date" id="cert-start" onchange="updateCertificate()" class="w-full bg-transparent border-b border-gold/30 py-2 text-beige font-light text-sm focus:border-gold outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gold/80 text-xs font-cinzel uppercase tracking-widest mb-2">Fecha Fin:</label>
+                            <input type="date" id="cert-end" onchange="updateCertificate()" class="w-full bg-transparent border-b border-gold/30 py-2 text-beige font-light text-sm focus:border-gold outline-none">
+                        </div>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="button" onclick="window.print()" class="w-full bg-gold text-wine-dark font-cinzel tracking-widest uppercase text-sm px-6 py-4 hover:bg-beige transition-colors duration-300">
+                            Expedir Documento (PDF / Imprimir)
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Previsualización del Certificado (Derecha) -->
+            <div class="w-full lg:w-2/3 p-4 md:p-8 flex items-center justify-center bg-wine-dark/50">
+                <!-- Certificado Printable Container -->
+                <div id="printable-certificate" class="bg-beige w-full max-w-[1056px] aspect-[1.414/1] relative p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                    
+                    <!-- Bordes Ornamentales -->
+                    <div class="absolute inset-4 md:inset-6 border-[1px] border-wine-dark/20"></div>
+                    <div class="absolute inset-5 md:inset-8 border-[3px] border-gold"></div>
+                    <div class="absolute inset-6 md:inset-10 border-[1px] border-wine-dark/20"></div>
+                    
+                    <!-- Esquinas Ornamentales -->
+                    <div class="absolute top-8 left-8 w-8 h-8 border-t-4 border-l-4 border-wine"></div>
+                    <div class="absolute top-8 right-8 w-8 h-8 border-t-4 border-r-4 border-wine"></div>
+                    <div class="absolute bottom-8 left-8 w-8 h-8 border-b-4 border-l-4 border-wine"></div>
+                    <div class="absolute bottom-8 right-8 w-8 h-8 border-b-4 border-r-4 border-wine"></div>
+
+                    <!-- Contenido del Certificado -->
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-10 md:px-20">
+                        
+                        <!-- Header -->
+                        <div class="mb-8">
+                            <h1 class="font-cinzel text-3xl md:text-5xl text-gold-dark mb-2 tracking-wide">L'Atelier Áureo</h1>
+                            <h2 class="font-cinzel text-xs md:text-sm text-wine-dark uppercase tracking-[0.3em]">Instituto Internacional de Artes Literarias y Cinematográficas</h2>
+                        </div>
+
+                        <!-- Otorga a -->
+                        <p class="font-playfair italic text-wine-dark/80 text-lg md:text-xl mb-4">Otorga el presente certificado a</p>
+                        
+                        <!-- Nombre del Estudiante Dinámico -->
+                        <h3 id="display-name" class="font-cinzel text-4xl md:text-5xl text-wine border-b-2 border-gold/50 pb-2 mb-6 min-w-[300px] min-h-[60px] inline-block">
+                            (Nombre del Estudiante)
+                        </h3>
+
+                        <!-- Texto Descriptivo Dinámico -->
+                        <div class="font-playfair text-wine-dark/90 text-sm md:text-lg leading-relaxed max-w-3xl mb-12">
+                            Por haber aprobado de manera satisfactoria nuestro(s) Programa(s) de Élite: 
+                            <span id="display-courses" class="font-bold text-wine italic block mt-2 mb-2 min-h-[28px]">(Seleccione los programas)</span>
+                            efectuado del <span id="display-start-date" class="font-bold border-b border-wine/30 px-2">--</span> al <span id="display-end-date" class="font-bold border-b border-wine/30 px-2">--</span>, 
+                            con una duración total de <span id="display-hours" class="font-bold text-wine text-xl">0</span> horas académicas.
+                        </div>
+
+                        <!-- Firmas -->
+                        <div class="w-full flex justify-between px-10 md:px-20 mt-auto">
+                            <!-- Firma 1 -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-40 md:w-56 border-b border-wine-dark/50 mb-2"></div>
+                                <p class="font-cinzel text-wine-dark font-bold text-xs md:text-sm">Fernando A. Cárdenas</p>
+                                <p class="font-playfair text-wine-dark/60 text-xs italic">Mentor Principal - Letras</p>
+                            </div>
+                            <!-- Sello (Decorativo) -->
+                            <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gold flex items-center justify-center opacity-70">
+                                <div class="w-14 h-14 md:w-20 md:h-20 rounded-full border border-wine/20 flex items-center justify-center bg-gold/5">
+                                    <span class="font-cinzel text-gold-dark text-[0.5rem] md:text-xs text-center leading-none">SELLO<br>OFICIAL</span>
+                                </div>
+                            </div>
+                            <!-- Firma 2 -->
+                            <div class="flex flex-col items-center">
+                                <div class="w-40 md:w-56 border-b border-wine-dark/50 mb-2"></div>
+                                <p class="font-cinzel text-wine-dark font-bold text-xs md:text-sm">Maria E. Fierro</p>
+                                <p class="font-playfair text-wine-dark/60 text-xs italic">Mentora Principal - Cine</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Form Submission Logic
+        function submitForm(event) {
+            event.preventDefault(); // Evita recargar la página
+            
+            // Oculta el formulario con una pequeña animación (fade out rápido)
+            const form = document.getElementById('contact-form');
+            const success = document.getElementById('success-message');
+            
+            form.style.opacity = '0';
+            setTimeout(() => {
+                form.style.display = 'none';
+                success.classList.remove('hidden');
+                // Pequeño delay para el fade in
+                setTimeout(() => {
+                    success.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        function resetForm() {
+            const form = document.getElementById('contact-form');
+            const success = document.getElementById('success-message');
+            
+            form.reset();
+            
+            success.style.opacity = '0';
+            setTimeout(() => {
+                success.classList.add('hidden');
+                form.style.display = 'block';
+                setTimeout(() => {
+                    form.style.opacity = '1';
+                }, 50);
+            }, 300);
+        }
+
+        /* --- LÓGICA DEL ÁREA DE CERTIFICADOS --- */
+        
+        const certArea = document.getElementById('certificate-area');
+
+        function openCertificateArea() {
+            certArea.classList.remove('hidden');
+            // Bloquear el scroll del body principal
+            document.body.style.overflow = 'hidden';
+            updateCertificate(); // Render inicial
+        }
+
+        function closeCertificateArea() {
+            certArea.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Formato de fechas en español
+        function formatearFecha(fechaInput) {
+            if (!fechaInput) return '--';
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+            const fecha = new Date(fechaInput);
+            return fecha.toLocaleDateString('es-ES', opciones);
+        }
+
+        function updateCertificate() {
+            // 1. Obtener nombre
+            const name = document.getElementById('cert-name').value;
+            document.getElementById('display-name').innerText = name ? name : '(Nombre del Estudiante)';
+
+            // 2. Obtener Cursos y calcular horas
+            const courseCheckboxes = document.querySelectorAll('.cert-course:checked');
+            let totalHours = 0;
+            let courseNames = [];
+
+            courseCheckboxes.forEach(cb => {
+                totalHours += parseInt(cb.dataset.hours);
+                courseNames.push(cb.value);
+            });
+
+            const displayCourses = document.getElementById('display-courses');
+            if (courseNames.length > 0) {
+                displayCourses.innerText = courseNames.join(' / ');
+            } else {
+                displayCourses.innerText = '(Seleccione los programas)';
+            }
+            
+            document.getElementById('display-hours').innerText = totalHours;
+
+            // 3. Obtener Fechas
+            const startDate = document.getElementById('cert-start').value;
+            const endDate = document.getElementById('cert-end').value;
+
+            document.getElementById('display-start-date').innerText = startDate ? formatearFecha(startDate) : '--';
+            document.getElementById('display-end-date').innerText = endDate ? formatearFecha(endDate) : '--';
+        }
+    </script>
+</body>
+</html>

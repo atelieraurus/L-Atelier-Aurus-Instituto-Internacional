@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     
+    <!-- html2canvas para descargar PNG -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -548,35 +551,35 @@
                         <label class="block text-gold/80 text-xs font-cinzel uppercase tracking-widest mb-4">Programas Completados:</label>
                         <div class="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Ingeniería del Guion" data-hours="40">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Ingeniería del Guion" data-hours="40" data-mentor="maria">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Ingeniería del Guion <span class="text-xs text-gold/50">(40h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Arte de la Novela" data-hours="45">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Arte de la Novela" data-hours="45" data-mentor="fernando">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">El Arte de la Novela <span class="text-xs text-gold/50">(45h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Estética de lo Macabro" data-hours="30">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Estética de lo Macabro" data-hours="30" data-mentor="ambos">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Estética de lo Macabro <span class="text-xs text-gold/50">(30h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Dirección de Actores" data-hours="35">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Dirección de Actores" data-hours="35" data-mentor="maria">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Dirección de Actores <span class="text-xs text-gold/50">(35h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Cosmovisión Interandina" data-hours="35">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Cosmovisión Interandina" data-hours="35" data-mentor="fernando">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Cosmovisión Interandina <span class="text-xs text-gold/50">(35h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Gramática del Montaje" data-hours="30">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Gramática del Montaje" data-hours="30" data-mentor="maria">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Gramática del Montaje <span class="text-xs text-gold/50">(30h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Documental de Autor" data-hours="40">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="El Documental de Autor" data-hours="40" data-mentor="maria">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">El Documental de Autor <span class="text-xs text-gold/50">(40h)</span></span>
                             </label>
                             <label class="flex items-start space-x-3 cursor-pointer group">
-                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Laboratorio de Autor" data-hours="15">
+                                <input type="checkbox" onchange="updateCertificate()" class="cert-course mt-1 accent-gold" value="Laboratorio de Autor" data-hours="15" data-mentor="ambos">
                                 <span class="text-beige/80 text-sm group-hover:text-gold transition-colors">Laboratorio de Autor <span class="text-xs text-gold/50">(15h)</span></span>
                             </label>
                         </div>
@@ -594,9 +597,12 @@
                         </div>
                     </div>
 
-                    <div class="pt-6">
-                        <button type="button" onclick="window.print()" class="w-full bg-gold text-wine-dark font-cinzel tracking-widest uppercase text-sm px-6 py-4 hover:bg-beige transition-colors duration-300">
-                            Expedir Documento (PDF / Imprimir)
+                    <div class="pt-6 space-y-3">
+                        <button type="button" onclick="downloadPNG()" class="w-full bg-gold text-wine-dark font-cinzel tracking-widest uppercase text-sm px-6 py-4 hover:bg-beige transition-colors duration-300">
+                            Descargar en Alta Calidad (PNG)
+                        </button>
+                        <button type="button" onclick="window.print()" class="w-full bg-transparent border border-gold text-gold font-cinzel tracking-widest uppercase text-sm px-6 py-4 hover:bg-gold/10 transition-colors duration-300">
+                            Imprimir / Guardar PDF
                         </button>
                     </div>
                 </form>
@@ -643,22 +649,25 @@
                             con una duración total de <span id="display-hours" class="font-bold text-wine text-xl">0</span> horas académicas.
                         </div>
 
-                        <!-- Firmas -->
-                        <div class="w-full flex justify-between px-10 md:px-20 mt-auto">
-                            <!-- Firma 1 -->
-                            <div class="flex flex-col items-center">
+                        <!-- Espacio QR (Inferior Izquierdo) -->
+                        <div class="absolute bottom-12 left-12 md:bottom-16 md:left-16 w-20 h-20 md:w-24 md:h-24 border border-wine/30 flex flex-col items-center justify-center text-wine/40 bg-wine/5">
+                            <svg class="w-6 h-6 md:w-8 md:h-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
+                            <span class="text-[0.45rem] md:text-[0.55rem] font-cinzel tracking-widest text-center">ESPACIO<br>QR</span>
+                        </div>
+
+                        <!-- Firmas Dinámicas -->
+                        <div id="signatures-container" class="w-full flex justify-center gap-12 md:gap-32 mt-auto">
+                            <!-- Firma Fernando -->
+                            <div id="sig-fernando" class="flex flex-col items-center transition-all duration-300">
                                 <div class="w-40 md:w-56 border-b border-wine-dark/50 mb-2"></div>
                                 <p class="font-cinzel text-wine-dark font-bold text-xs md:text-sm">Fernando A. Cárdenas</p>
                                 <p class="font-playfair text-wine-dark/60 text-xs italic">Mentor Principal - Letras</p>
                             </div>
-                            <!-- Sello (Decorativo) -->
-                            <div class="w-16 h-16 md:w-24 md:h-24 rounded-full border border-gold flex items-center justify-center opacity-70">
-                                <div class="w-14 h-14 md:w-20 md:h-20 rounded-full border border-wine/20 flex items-center justify-center bg-gold/5">
-                                    <span class="font-cinzel text-gold-dark text-[0.5rem] md:text-xs text-center leading-none">SELLO<br>OFICIAL</span>
-                                </div>
-                            </div>
-                            <!-- Firma 2 -->
-                            <div class="flex flex-col items-center">
+                            
+                            <!-- Firma Maria -->
+                            <div id="sig-maria" class="flex flex-col items-center transition-all duration-300">
                                 <div class="w-40 md:w-56 border-b border-wine-dark/50 mb-2"></div>
                                 <p class="font-cinzel text-wine-dark font-bold text-xs md:text-sm">Maria E. Fierro</p>
                                 <p class="font-playfair text-wine-dark/60 text-xs italic">Mentora Principal - Cine</p>
@@ -746,16 +755,27 @@
             const name = document.getElementById('cert-name').value;
             document.getElementById('display-name').innerText = name ? name : '(Nombre del Estudiante)';
 
-            // 2. Obtener Cursos y calcular horas
+            // 2. Obtener Cursos y calcular horas / mentores
             const courseCheckboxes = document.querySelectorAll('.cert-course:checked');
             let totalHours = 0;
             let courseNames = [];
+            let hasFernando = false;
+            let hasMaria = false;
 
             courseCheckboxes.forEach(cb => {
                 totalHours += parseInt(cb.dataset.hours);
                 courseNames.push(cb.value);
+                
+                // Lógica Dinámica de Firmas
+                if (cb.dataset.mentor === 'fernando') hasFernando = true;
+                if (cb.dataset.mentor === 'maria') hasMaria = true;
+                if (cb.dataset.mentor === 'ambos') {
+                    hasFernando = true;
+                    hasMaria = true;
+                }
             });
 
+            // Actualizar panel de texto de cursos
             const displayCourses = document.getElementById('display-courses');
             if (courseNames.length > 0) {
                 displayCourses.innerText = courseNames.join(' / ');
@@ -765,12 +785,44 @@
             
             document.getElementById('display-hours').innerText = totalHours;
 
+            // Actualizar firmas visualmente
+            const sigFernando = document.getElementById('sig-fernando');
+            const sigMaria = document.getElementById('sig-maria');
+            
+            // Si no hay cursos seleccionados, mostrar ambas firmas por estética
+            if (courseNames.length === 0) {
+                hasFernando = true;
+                hasMaria = true;
+            }
+
+            sigFernando.style.display = hasFernando ? 'flex' : 'none';
+            sigMaria.style.display = hasMaria ? 'flex' : 'none';
+
             // 3. Obtener Fechas
             const startDate = document.getElementById('cert-start').value;
             const endDate = document.getElementById('cert-end').value;
 
             document.getElementById('display-start-date').innerText = startDate ? formatearFecha(startDate) : '--';
             document.getElementById('display-end-date').innerText = endDate ? formatearFecha(endDate) : '--';
+        }
+
+        // 4. Lógica de Descarga PNG Alta Calidad
+        function downloadPNG() {
+            const certNode = document.getElementById('printable-certificate');
+            
+            // Usamos html2canvas con scale: 3 para simular muy alta resolución (300dpi)
+            html2canvas(certNode, {
+                scale: 3, 
+                backgroundColor: '#F5F5DC', // Forzar color base Beige
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                // Crear un nombre de archivo dinámico basado en el alumno
+                const alumno = document.getElementById('cert-name').value.replace(/ /g, '_') || 'Estudiante';
+                link.download = `Certificado_${alumno}_LAtelierAureo.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
     </script>
 </body>

@@ -135,9 +135,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-24">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex flex-col justify-center">
-                    <a href="#" class="font-cinzel text-2xl tracking-widest text-gold">L'Atelier Áureo</a>
-                    <span class="text-beige/60 text-[0.65rem] tracking-[0.2em] uppercase font-light">Instituto Internacional</span>
+                <div class="flex-shrink-0 flex items-center space-x-3">
+                    <!-- Espacio para el Logotipo (Navbar) -->
+                    <img src="https://raw.githubusercontent.com/atelieraurus/L-Atelier-Aurus-Instituto-Internacional/main/resources/nuevo%20logo.png" alt="Logo L'Atelier Áureo" class="w-10 h-10 md:w-12 md:h-12 object-contain drop-shadow-md">
+                    <div class="flex flex-col justify-center">
+                        <a href="#" class="font-cinzel text-xl md:text-2xl tracking-widest text-gold">L'Atelier Áureo</a>
+                        <span class="text-beige/60 text-[0.6rem] md:text-[0.65rem] tracking-[0.2em] uppercase font-light">Instituto Internacional</span>
+                    </div>
                 </div>
                 
                 <!-- Desktop Menu -->
@@ -145,9 +149,6 @@
                     <a href="#sobre-nosotros" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Sobre Nosotros</a>
                     <a href="#programas" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Programas de Élite</a>
                     <a href="#contacto" class="font-cinzel text-sm tracking-wider text-beige hover:text-gold transition-colors duration-300">Contáctenos</a>
-                    
-                    <!-- MENÚ SECRETO -->
-                    <a href="#" onclick="openCertificateArea(); return false;" class="font-cinzel text-sm tracking-wider text-gold opacity-0 hover:opacity-100 transition-opacity duration-700 cursor-default hover:cursor-pointer select-none">Certificados</a>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -166,8 +167,6 @@
                 <a href="#sobre-nosotros" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Sobre Nosotros</a>
                 <a href="#programas" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Programas de Élite</a>
                 <a href="#contacto" class="block px-3 py-2 font-cinzel text-beige hover:text-gold">Contáctenos</a>
-                <!-- Menú Secreto Móvil (casi invisible) -->
-                <a href="#" onclick="openCertificateArea(); return false;" class="block px-3 py-2 font-cinzel text-gold opacity-0 active:opacity-100 transition-opacity">Certificados</a>
             </div>
         </div>
     </nav>
@@ -177,8 +176,12 @@
         <!-- Subtle background glowing orb -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-wine rounded-full blur-[120px] opacity-50 z-0"></div>
         
-        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
             <h2 class="text-gold font-cinzel tracking-[0.3em] text-sm md:text-base uppercase mb-6">La Creación no es un Accidente</h2>
+            
+            <!-- Espacio para el Logotipo (Hero) -->
+            <img src="https://raw.githubusercontent.com/atelieraurus/L-Atelier-Aurus-Instituto-Internacional/main/resources/nuevo%20logo.png" alt="Logo Principal L'Atelier Áureo" class="w-32 h-32 md:w-40 md:h-40 object-contain mb-8 drop-shadow-[0_0_20px_rgba(212,175,55,0.15)]">
+
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-cinzel mb-8 text-gold-gradient leading-tight">L'Atelier Áureo</h1>
             <p class="text-beige/80 text-lg md:text-xl font-light italic max-w-2xl mx-auto leading-relaxed mb-12">
                 Instituto Internacional de Artes Literarias y Cinematográficas. Diseñado exclusivamente para mentes creativas que buscan perfeccionar su oficio.
@@ -518,7 +521,7 @@
                 </a>
             </div>
             <p class="text-beige/40 text-xs font-light tracking-widest uppercase">
-                &copy; 2026 L'Atelier Áureo. Todos los derechos reservados.
+                &copy; <span id="easter-egg-trigger" class="cursor-default select-none relative z-20">2026</span> L'Atelier Áureo. Todos los derechos reservados.
             </p>
         </div>
     </footer>
@@ -625,13 +628,16 @@
                     <div class="absolute bottom-8 right-8 w-8 h-8 border-b-4 border-r-4 border-wine"></div>
 
                     <!-- Contenido del Certificado -->
-                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-10 md:px-20">
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-10 md:px-20 pt-4">
                         
                         <!-- Header -->
-                        <div class="mb-8">
+                        <div class="mb-4">
                             <h1 class="font-cinzel text-3xl md:text-5xl text-gold-dark mb-2 tracking-wide">L'Atelier Áureo</h1>
                             <h2 class="font-cinzel text-xs md:text-sm text-wine-dark uppercase tracking-[0.3em]">Instituto Internacional de Artes Literarias y Cinematográficas</h2>
                         </div>
+
+                        <!-- Espacio para el Logotipo (Certificado) -->
+                        <img src="https://raw.githubusercontent.com/atelieraurus/L-Atelier-Aurus-Instituto-Internacional/main/resources/nuevo%20logo.png" crossorigin="anonymous" alt="Logo L'Atelier Áureo" class="h-16 md:h-20 object-contain mb-6">
 
                         <!-- Otorga a -->
                         <p class="font-playfair italic text-wine-dark/80 text-lg md:text-xl mb-4">Otorga el presente certificado a</p>
@@ -649,12 +655,9 @@
                             con una duración total de <span id="display-hours" class="font-bold text-wine text-xl">0</span> horas académicas.
                         </div>
 
-                        <!-- Espacio QR (Inferior Izquierdo) -->
-                        <div class="absolute bottom-12 left-12 md:bottom-16 md:left-16 w-20 h-20 md:w-24 md:h-24 border border-wine/30 flex flex-col items-center justify-center text-wine/40 bg-wine/5">
-                            <svg class="w-6 h-6 md:w-8 md:h-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm14 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                            </svg>
-                            <span class="text-[0.45rem] md:text-[0.55rem] font-cinzel tracking-widest text-center">ESPACIO<br>QR</span>
+                        <!-- Espacio QR (Inferior Izquierdo - Esquina) -->
+                        <div class="absolute bottom-8 left-8 md:bottom-10 md:left-10 w-16 h-16 md:w-20 md:h-20 z-20">
+                            <img src="https://raw.githubusercontent.com/atelieraurus/L-Atelier-Aurus-Instituto-Internacional/main/resources/qr.png" crossorigin="anonymous" alt="Código QR de Verificación" class="w-full h-full object-contain">
                         </div>
 
                         <!-- Firmas Dinámicas -->
@@ -701,23 +704,6 @@
             
             form.style.opacity = '0';
             setTimeout(() => {
-                form.style.display = 'none';
-                success.classList.remove('hidden');
-                // Pequeño delay para el fade in
-                setTimeout(() => {
-                    success.style.opacity = '1';
-                }, 50);
-            }, 300);
-        }
-
-        function resetForm() {
-            const form = document.getElementById('contact-form');
-            const success = document.getElementById('success-message');
-            
-            form.reset();
-            
-            success.style.opacity = '0';
-            setTimeout(() => {
                 success.classList.add('hidden');
                 form.style.display = 'block';
                 setTimeout(() => {
@@ -725,6 +711,29 @@
                 }, 50);
             }, 300);
         }
+
+        /* --- LÓGICA DEL EASTER EGG (MENÚ SECRETO) --- */
+        let clickCount = 0;
+        let clickTimer;
+        
+        const triggerBtn = document.getElementById('easter-egg-trigger');
+        
+        triggerBtn.addEventListener('click', () => {
+            clickCount++;
+            
+            // Si llega a 5 clics, abre el área secreta
+            if (clickCount >= 5) {
+                openCertificateArea();
+                clickCount = 0; // Reiniciar contador
+                clearTimeout(clickTimer);
+            }
+            
+            // Reiniciar el contador si pasa mucho tiempo entre clics (1.5 segundos)
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 1500);
+        });
 
         /* --- LÓGICA DEL ÁREA DE CERTIFICADOS --- */
         
